@@ -17,12 +17,12 @@ def rich_func(res):
 
 	console.print(Text(res,style="bold blue"))
 	
-def status_of_container():
+def Status_of_container():
 
 	print(os.popen("docker ps -a").read())
 	#os.system("sudo docker container stats")
 
-def downld_img():
+def Downld_img():
 
 	image = input("Enter the image name :")
 	cmd = f"docker pull {image}"
@@ -30,7 +30,7 @@ def downld_img():
 	res = os.popen(cmd).read()
 	rich_func(res)
 
-def run_container():
+def Run_container():
 
 	image = input("Enter the image name :")
 	container = input("Enter the container name :")
