@@ -59,17 +59,20 @@ def Modify_Network_detail_contaniner():
    
 	res = os.popen("docker network ls").read()
 	rich_func(res)
+	
 	network = input("Enter the network name : ")
 	container_image = input("Enter the container name to disconnect from network :")
 	print(f"Disconnecting {container_image} from {network}")
 	cmd =f"docker network disconnect bridge {container_image}"
 	print(os.popen(cmd).read())
 	console.print("Disconnected network",style="bold blue")
+	
 	console.print("Creating Network", style="bold cyan")
 	ip = input('enter ip for network/cidr :')
 	cmd1=f"sudo docker network create -d bridge --subnet={ip}  {network}"
 	print(os.popen(cmd1).read())
 	print(f"Connecting {container_image} to  {network}")
+	
 	cmd2 = f"docker network connect {network} {container_image}"
 	print(os.popen(cmd2).read())
 	console.print("Connected to network",style="bold blue")
