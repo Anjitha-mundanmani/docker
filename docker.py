@@ -78,7 +78,7 @@ def Modify_Network_detail_contaniner():
 	console.print("Connected to network",style="bold blue")
 
 def Exit():
-
+	console.print("Successfully Exited",style="bold green")
 	exit()	
 	
 operations = {
