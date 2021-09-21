@@ -25,9 +25,8 @@ def Status_of_container():
 def Downld_img():
 
 	image = input("Enter the image name :")
-	cmd = f"docker pull {image}"
-	print(cmd)
-	res = os.popen(cmd).read()
+	print(f"docker pull {image}")
+	res = os.popen(f"docker pull {image}").read()
 	rich_func(res)
 
 def Run_container():
@@ -54,7 +53,7 @@ def Network_detail_container():
 	rich_func(res)
 	l = json.loads(res)[0]
 	for i in l["Containers"].values():
-		print(f'{i["Name"]} | {i["MacAddress"]} | {i["IPv4Address"]}' )
+		console.print(f'{i["Name"]} | {i["MacAddress"]} | {i["IPv4Address"]}',style="bold magenta" )
 
 def Modify_Network_detail_contaniner(): 
    
@@ -63,12 +62,16 @@ def Modify_Network_detail_contaniner():
 	network = input("Enter the network name : ")
 	container_image = input("Enter the container name to disconnect from network :")
 	print(f"Disconnecting {container_image} from {network}")
-	cmd =f"docker network disconnect {network} {container_image}"
+	cmd =f"docker network disconnect bridge {container_image}"
 	print(os.popen(cmd).read())
 	console.print("Disconnected network",style="bold blue")
+	console.print("Creating Network", style="bold cyan")
+	ip = input('enter ip for network/cidr :')
+	cmd1=f"sudo docker network create -d bridge --subnet={ip}  {network}"
+	print(os.popen(cmd1).read())
 	print(f"Connecting {container_image} to  {network}")
-	cmd = f"docker network connect {network} {container_image}"
-	print(os.popen(cmd).read())
+	cmd2 = f"docker network connect {network} {container_image}"
+	print(os.popen(cmd2).read())
 	console.print("Connected to network",style="bold blue")
 
 def Exit():
@@ -76,9 +79,9 @@ def Exit():
 	exit()	
 	
 operations = {
-	"1":status_of_container,
-	"2":downld_img,
-	"3":run_container,
+	"1":Status_of_container,
+	"2":Downld_img,
+	"3":Run_container,
 	"4":Del_Container,
 	"5":Network_detail_container,
 	"6":Modify_Network_detail_contaniner,
